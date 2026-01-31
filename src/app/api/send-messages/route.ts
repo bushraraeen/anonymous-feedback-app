@@ -1,8 +1,9 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/app/model/User";
 import { Message } from "@/app/model/User";
+import { AnyARecord } from "dns";
 
-// ✅ SAHI: Sirf 'export async function POST' hona chahiye
+
 export async function POST(request: Request) {
     await dbConnect();
 
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
 
         const newMessage = { content, createdAt: new Date() };
 
-        user.messages.push(newMessage as Message);
+       ( user.messages as any).push(newMessage as any);
         await user.save();
 
         return Response.json(
@@ -44,4 +45,3 @@ export async function POST(request: Request) {
     }
 }
 
-// ❌ GALAT: Yahan niche 'export default ...' KUCH BHI NAHI hona chahiye
