@@ -28,8 +28,10 @@ export async function POST(request: Request) {
 
         const newMessage = { content, createdAt: new Date() };
 
-       ( user.messages as any).push(newMessage as any);
-        await user.save();
+     const updatedUser = user as any;
+updatedUser.messages.push(newMessage);
+await updatedUser.save();
+       
 
         return Response.json(
             { success: true, message: "Message sent successfully" },
